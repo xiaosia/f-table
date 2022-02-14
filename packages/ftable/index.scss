@@ -1,0 +1,51 @@
+$columns: 180px;
+
+// .ftable{
+    
+// }
+
+:root{
+    // $--f-table-columns--item: 180px;
+    --f-table-columns--item: 180px;
+    font-family: Inter, Roboto, Oxygen, Fira Sans, Helvetica Neue, sans-serif;
+    --f-table-column--item--color: #606266;
+    --f--table-column--border--bottom: 1px solid #f0f0f0;
+    --f--table--bgColor: #fff
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.144);
+    border-radius: 10px;
+    transition: all .2s ease-in-out;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.list {
+	width: var(--f-table-columns--item);
+	padding: 20px 0px;
+	color: var(--f-table-column--item--color);
+	border-bottom: var(--f--table-column--border--bottom);
+}
+
+.ftable_column {
+	// border: 1px solid red;
+	td {
+		width: var(--f-table-columns--item);
+	}
+}
+
+.fdatashow{
+    position: fixed;
+    z-index: 9999;
+    width: 300px;
+    height: 300px;
+    background-color: #f0f0f0;
+    left: 0px;
+    top: 0px;
+}
