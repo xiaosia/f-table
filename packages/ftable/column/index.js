@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-10 14:52:48
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-14 15:33:26
+ * @LastEditTime: 2022-02-16 17:03:53
  */
 
 import {
@@ -23,7 +23,6 @@ export default defineComponent({
 		Lists,
 	},
 	setup(props, content) {
-		console.log('content', content)
 		let _this = getCurrentInstance();
 		reaDataStore.options = _this.parent.attrs.options;
 		reaDataStore.columns = getCurrentInstance().parent.attrs.columns;
@@ -43,8 +42,9 @@ export default defineComponent({
 				pageSize: 20, //每页个数
 				currentPage: 1, //当前页数
 			},
+			checkBoxList: [] //用于已经选择的列表
 		});
-
+		
 		return {
 			width,
 			solts,
@@ -54,7 +54,7 @@ export default defineComponent({
 		};
 	},
 	render() {
-		const { width, data, solts, columns, page, $parent } = this;
+		const { width, data, solts, columns, page, $parent, checkBoxList} = this;
 
 		// datas : 传递进来的data数据
 		const datas = computed(() => {
@@ -69,11 +69,30 @@ export default defineComponent({
 		const computedOptions = computed(() => {
 			// computedOptions 用于表格的配置，配置是否需要table上方按钮，删除按钮修改查看按钮
 			return this.$parent.$attrs.options;
-		})
-		const computedColumns = computed(()=>{
-			return $parent.$attrs.columns
-		})
+		});
+		const computedColumns = computed(() => {
+			return $parent.$attrs.columns;
+		});
 
+		const rowClick = (row, data, index) => {
+			if(!computedOptions.value.selection){
+				$parent.$emit("rowClick", { row, data, index });
+			}
+		};
+		const rowDelect = (row, data, index) => {
+			$parent.$emit("rowDelect", { row, data, index });
+		};
+
+		const checkBoxChange = (event) =>{
+			console.log("event", event)
+			if(event.event){
+				checkBoxList.push(event.data)
+			}else{
+				checkBoxList.splice(checkBoxList.indexOf(event.data), 1)
+			}
+			$parent.$emit("checkBoxChange", checkBoxList);
+
+		}
 		const computedFrom = () => {};
 		return h(
 			"table",
@@ -95,24 +114,27 @@ export default defineComponent({
 								});
 						  })
 						: [],
+						computedOptions.value.selection? h("col", {
+							width: item.width,
+						}): ""
 				]),
-				h("tr", {
-					class: "ftable_column",
-				}),
 				datas.value.map((item, index) => {
 					return h(
 						"tr",
 						{
 							class: "ftable_column",
+							onClick: () => rowClick(item, datas.value, index),
 						},
 						[
 							h(Lists, {
+								onBoxSelect: (event) => checkBoxChange(event),
 								data: item,
 								columns: computedColumns.value,
 								btnSolts: solts.rowBtn,
 								soltsList: solts,
 								index: index + 1,
-							})
+								selection: computedOptions.value.selection
+							}),
 						]
 					);
 				}),

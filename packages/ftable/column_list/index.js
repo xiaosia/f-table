@@ -3,9 +3,9 @@
  * @Autor: Seven
  * @Date: 2022-02-10 15:24:19
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-14 15:32:34
+ * @LastEditTime: 2022-02-16 17:02:03
  */
-import { ElButton, ElPopconfirm } from "element-plus";
+import { ElButton, ElCheckbox, ElPopconfirm } from "element-plus";
 import { defineComponent, h, toRefs, watch } from "vue";
 import Item from "../column_item/index.js";
 import FSolts from "../fsolts";
@@ -20,14 +20,14 @@ export default defineComponent({
 		item: {
 			type: Object,
 			default: () => {},
-		}
+		},
 	},
 	setup(props, content) {
 		const updateModel = () => {
 			reaDataStore.form = JSON.parse(JSON.stringify(content.attrs.data));
 			reaDataStore.modelShow = true;
 		};
-		console.log('list_content', content)
+		console.log("list_content", content);
 		const delectBtn = () => {
 			console.log("log");
 		};
@@ -38,8 +38,9 @@ export default defineComponent({
 		};
 	},
 	render() {
-		const { columns, $attrs, options, updateModel, form, delectBtn } = this;
-		console.log("list", this)
+		const { columns, $attrs, options, updateModel, form, delectBtn, $emit } =
+			this;
+		console.log("list", this);
 		const showRow = () => {
 			if (options.rowBtn) {
 				return h(
@@ -87,7 +88,7 @@ export default defineComponent({
 			}
 		};
 		const row = () => {
-			if(!$attrs.columns) return []
+			if (!$attrs.columns) return [];
 			return $attrs.columns.map((v, index) => {
 				return h(
 					"td",
@@ -111,13 +112,37 @@ export default defineComponent({
 									value: $attrs.data[v.name],
 									solt: $attrs.soltsList[v.name],
 									index: $attrs.index,
-									columns: v
+									columns: v,
 							  }),
 					]
 				);
 			});
 		};
 		// return [row(), showRow()];
-		return [row(), showRow()];
+		const checkBoxChange = (e) => {
+			console.log("e", e);
+			$emit("boxSelect", {
+				event: e,
+				data: $attrs.data,
+			});
+		};
+		const select = () => {
+			if(!$attrs.selection) return 
+			return h(
+				"td",
+				{
+					rowspan: 1,
+					colspan: 1,
+					class: "list",
+				},
+				[
+					h(ElCheckbox, {
+						label: "",
+						onChange: (event) => checkBoxChange(event),
+					}),
+				]
+			);
+		};
+		return [select(), row(), showRow()];
 	},
 });

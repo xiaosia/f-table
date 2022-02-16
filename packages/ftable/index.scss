@@ -39,7 +39,11 @@ $columns: 180px;
 		width: var(--f-table-columns--item);
 	}
 }
-
+.ftable_column:hover{
+    background-color: #e6f7ff;
+    cursor: pointer;
+    // box-shadow: 0 0 8px 0 rgb(232,237,250 / 60%), 0 2px 4px 0 rgb(232,237,250 / 50%);
+}
 .fdatashow{
     position: fixed;
     z-index: 9999;

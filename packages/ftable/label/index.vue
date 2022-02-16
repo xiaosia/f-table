@@ -3,14 +3,18 @@
  * @Autor: Seven
  * @Date: 2022-02-09 11:00:23
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-14 13:48:17
+ * @LastEditTime: 2022-02-16 17:08:08
 -->
 <template>
-	<table class="ftable_label" ref="table" :style="{ width: width }">
+	<table cellspacing="0" cellpadding="0" class="ftable_label" ref="table" :style="{ width: width,tableLayout: 'fixed',borderCollapse: 'separate' }">
 		<colgroup>
+			<col v-if="options.selection">
 			<col v-for="(item, index) in columns" :width="item.width" />
 		</colgroup>
 		<tr>
+			<td class="ftable_header_label" v-if="options.selection">
+				<el-checkbox></el-checkbox>
+			</td>
 			<td
 				v-for="(item, index) in columns"
 				:key="index"
@@ -56,6 +60,7 @@ export default defineComponent({
 		return {
 			columns,
 			width,
+			options
 		};
 	},
 });
