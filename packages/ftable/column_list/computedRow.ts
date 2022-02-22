@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-22 13:24:14
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-22 15:25:31
+ * @LastEditTime: 2022-02-22 16:18:16
  */
 
 import Item from "../column_item/index.js";
@@ -77,7 +77,8 @@ export const rowTest = (h, columns, data = {}, soltsList = {}) => {
 			)
 		);
 	});
-    console.log("rr", new postionArr('left'))
+	positionLeftArrDom[positionLeftArrDom.length -1].props.class = positionLeftArrDom[positionLeftArrDom.length -1].props.class + ' last_left_postition'
+	positionRightDom[positionRightDom.length -1].props.class = positionRightDom[positionRightDom.length -1].props.class + ' last_right_postition'
 	return [...positionLeftArrDom, ...defaultDom, ...positionRightDom];
 };
 class postionArr {
@@ -128,7 +129,7 @@ const rowDefault = (
 			width: item.width|| defaultConfig.defaultWidth,
 			style: {
 				width: item.width || defaultConfig.defaultWidth,
-				padding: "20px 0px",
+				padding: "20px 10px",
 				color: "var(--f-table-column--item--color)",
 				borderBottom: "var(--f--table-column--border--bottom)",
 				...styleArr,

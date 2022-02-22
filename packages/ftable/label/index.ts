@@ -9,7 +9,7 @@ import { rowTest } from "../column_list/computedRow";
  * @Autor: Seven
  * @Date: 2022-02-22 14:45:37
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-22 15:30:10
+ * @LastEditTime: 2022-02-22 15:49:57
  */
 export default defineComponent({
 	setup() {
@@ -34,11 +34,9 @@ export default defineComponent({
 		const { columns, width, options } = this;
 		const domCol = computed(() => {
 			return columns.map((v, i) => {
-				console.log("v", v);
 				return {
 					...v,
 					render: (item, data, h) => {
-						console.log("item", item);
 						return h("span", item.label);
 					},
 				};
@@ -65,7 +63,9 @@ export default defineComponent({
 						  })
 						: [],
 				]),
-				h("tr", [
+				h("tr", {
+					class: 'ftable_column'
+				},[
 					h(
 						Lists,
 						{

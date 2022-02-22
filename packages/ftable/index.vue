@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-09 10:52:42
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-22 15:02:35
+ * @LastEditTime: 2022-02-22 16:12:58
 -->
 <template>
 	<div class="ftable_contact f_table" ref="ftable_width">
@@ -54,7 +54,7 @@ export default defineComponent({
 @import "./index.scss";
 .ftable_contact {
 	width: 100%;
-	padding: 10px;
+	// padding: 10px;
 	box-sizing: border-box;
 	background-color: var(--f--table--bgColor);
 }
