@@ -36,7 +36,12 @@ const options = ref({})
 </script>
 
 <template>
-	<f-table :columns="columns" :data="records" :options="options"> </f-table>
+	<f-table :columns="columns" :data="records" :options="options"> 
+    <template v-slot:name="{value, row}">
+       <el-tag>插槽绑定的值：{{value}}</el-tag>
+       <el-tag>这一行的值：{{row}}</el-tag>
+    </template>
+  </f-table>
 </template>
 
 <style>

@@ -76,21 +76,13 @@ $columns: 180px;
 
 
 .ftable_label {
-	width: 100%;
-	font-weight: 600;
-	color: #909399;
-	padding: 10px 0px;
-	table-layout: fixed;
-	border-collapse: separate;
-	border-bottom: var(--f--table-column--border--bottom);
 	tr {
-		width: 100%;
-		.ftable_header_label {
-			// width: var(--f-table-columns--item);
-		}
-		& > .ftable_header_label:last-child {
-			min-width: var(--f-table-columns--item);
-		}
+        td{
+            span{
+                font-weight: 600;
+                color: #909399;
+            }
+        }
 	}
 }
 .ftable_header_label {

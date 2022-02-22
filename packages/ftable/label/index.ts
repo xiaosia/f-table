@@ -9,7 +9,7 @@ import { rowTest } from "../column_list/computedRow";
  * @Autor: Seven
  * @Date: 2022-02-22 14:45:37
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-22 15:49:57
+ * @LastEditTime: 2022-02-22 17:22:23
  */
 export default defineComponent({
 	setup() {
@@ -36,7 +36,7 @@ export default defineComponent({
 			return columns.map((v, i) => {
 				return {
 					...v,
-					render: (item, data, h) => {
+					render: ({item, data, h}) => {
 						return h("span", item.label);
 					},
 				};
@@ -47,6 +47,7 @@ export default defineComponent({
 			{
 				cellpadding: "0",
 				cellspacing: "0",
+				class: 'ftable_label',
 				style: {
 					width: width,
 					"table-layout": "fixed",
