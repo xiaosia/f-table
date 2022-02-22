@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-09 11:00:23
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-17 09:17:19
+ * @LastEditTime: 2022-02-22 14:56:25
 -->
 <template>
 	<table cellspacing="0" cellpadding="0" class="ftable_label" ref="table" :style="{ width: width,tableLayout: 'fixed',borderCollapse: 'separate' }">
@@ -18,11 +18,12 @@
 			<td
 				v-for="(item, index) in columns"
 				:key="index"
-				class="ftable_header_label"
+				:class="['ftable_header_label', item.position?`f-position f-position-${item.position}`:'']"
 				rowspan="1"
 				colspan="1"
 				:style="{
 					width: item.width || '180px',
+					[item.position]: '0px'
 				}"
 			>
 				{{ item.label }}
@@ -67,31 +68,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.ftable_label {
-	width: 100%;
-	font-weight: 600;
-	color: #909399;
-	padding: 10px 0px;
-	table-layout: fixed;
-	border-collapse: separate;
-	border-bottom: var(--f--table-column--border--bottom);
-	tr {
-		width: 100%;
-		.ftable_header_label {
-			// width: var(--f-table-columns--item);
-		}
-		& > .ftable_header_label:last-child {
-			min-width: var(--f-table-columns--item);
-		}
-	}
-}
-.ftable_header_label {
-	// width: var(--f-table-columns--item);
-}
-.label_text {
-	display: flex;
-	justify-content: space-between;
-	font-weight: 600;
-	color: #909399;
-}
+
 </style>

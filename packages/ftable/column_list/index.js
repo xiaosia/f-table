@@ -3,14 +3,14 @@
  * @Autor: Seven
  * @Date: 2022-02-10 15:24:19
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-18 11:26:12
+ * @LastEditTime: 2022-02-22 14:07:46
  */
 import { ElButton, ElCheckbox, ElPopconfirm } from "element-plus";
 import { defineComponent, h, toRefs, watch } from "vue";
 import Item from "../column_item/index.js";
 import FSolts from "../fsolts";
 import { fTableReaData } from "../store";
-
+import { rowTest } from "./computedRow"
 export default defineComponent({
 	components: {
 		Item,
@@ -87,30 +87,39 @@ export default defineComponent({
 		};
 		const row = () => {
 			if (!$attrs.columns) return [];
-			return $attrs.columns.map((v, index) => {
+			return rowTest(h, $attrs.columns, $attrs.data, $attrs.soltsList )
+			return $attrs.columns.map((item, index) => {
+				let classArr = ["list"];
+				let styleArr = {}
+				if (item.position) {
+					classArr.push("f-position");
+					classArr.push(`f-position-${item.position}`);
+					styleArr[item.position] = '0px'
+				}
 				return h(
 					"td",
 					{
 						rowspan: 1,
 						colspan: 1,
-						class: "list",
-						width: v.width,
+						class: classArr,
+						width: item.width,
 						style: {
-							width: v.width,
+							width: item.width,
 							padding: "20px 0px",
 							color: "var(--f-table-column--item--color)",
 							borderBottom: "var(--f--table-column--border--bottom)",
+							...styleArr
 						},
 					},
 					[
-						v.render
-							? v.render(v, $attrs.data, h)
+						item.render
+							? item.render(item, $attrs.data, h)
 							: h(Item, {
 									data: $attrs.data,
-									value: $attrs.data[v.name],
-									solt: $attrs.soltsList[v.name],
+									value: $attrs.data[item.name],
+									solt: $attrs.soltsList[item.name],
 									index: $attrs.index,
-									columns: v,
+									columns: item,
 							  }),
 					]
 				);

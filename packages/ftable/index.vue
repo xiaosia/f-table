@@ -3,10 +3,10 @@
  * @Autor: Seven
  * @Date: 2022-02-09 10:52:42
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-22 10:36:53
+ * @LastEditTime: 2022-02-22 15:02:35
 -->
 <template>
-	<div class="ftable_contact" ref="ftable_width">
+	<div class="ftable_contact f_table" ref="ftable_width">
 		<SubmitList></SubmitList>
 		<div class="ftable_contact_table">
 			<Label></Label>
@@ -26,7 +26,7 @@ import {
 	toRefs,
 } from "vue";
 import { fTableReaData } from "./store";
-import Label from "./label/index.vue";
+import Label from "./label/index";
 import Columns from "./column/index.js";
 import SubmitList from "./submitList/index.js";
 import FDialog from "./fDialog/index.vue";

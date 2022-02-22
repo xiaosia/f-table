@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-11 09:24:55
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-14 14:14:59
+ * @LastEditTime: 2022-02-22 15:26:34
  */
 
 import { defineComponent, h } from "vue";
@@ -11,6 +11,7 @@ import { defineComponent, h } from "vue";
 export default defineComponent({
 	render() {
 		const { $attrs } = this;
+		console.log("$attrs", $attrs)
 		if ($attrs.solt) {
 			return $attrs.solt({ value: $attrs.value, row: $attrs.data });
 		}

@@ -1,12 +1,20 @@
 /*
- * @Description: 
+ * @Description: 状态管理
  * @Autor: Seven
  * @Date: 2022-02-09 16:21:41
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-18 10:24:13
+ * @LastEditTime: 2022-02-22 14:56:31
  */
 import { reactive } from "vue"
 
+
+/**
+ * @description: 默认配置
+ * @author: Seven
+ */
+export const defaultConfig = reactive({
+    defaultWidth: 180 //默认宽度为180px
+})
 
 export const reaDataStore = reactive({
     modelShow: false,
