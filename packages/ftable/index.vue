@@ -3,27 +3,35 @@
  * @Autor: Seven
  * @Date: 2022-02-09 10:52:42
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-14 14:33:03
+ * @LastEditTime: 2022-02-22 10:36:53
 -->
 <template>
 	<div class="ftable_contact" ref="ftable_width">
 		<SubmitList></SubmitList>
-		<Label></Label>
-		<Columns></Columns>
+		<div class="ftable_contact_table">
+			<Label></Label>
+			<Columns></Columns>
+		</div>
 		<Pagination></Pagination>
 		<FDialog></FDialog>
-		<!-- <Datat></Datat> -->
 	</div>
 </template>
 
 <script>
-import { defineComponent, getCurrentInstance} from "vue";
+import {
+	defineComponent,
+	getCurrentInstance,
+	reactive,
+	toRef,
+	toRefs,
+} from "vue";
+import { fTableReaData } from "./store";
 import Label from "./label/index.vue";
 import Columns from "./column/index.js";
 import SubmitList from "./submitList/index.js";
-import FDialog from "./fDialog/index.vue"
-import Pagination from "./pagination/index.vue"
-import Datat from "./datat/index"
+import FDialog from "./fDialog/index.vue";
+import Pagination from "./pagination/index.vue";
+import Datat from "./datat/index";
 export default defineComponent({
 	name: "f-table",
 	components: {
@@ -32,17 +40,13 @@ export default defineComponent({
 		SubmitList,
 		Pagination,
 		FDialog,
-		Datat
+		Datat,
 	},
-	setup(props, content){
-		const cli = () =>{
-			console.log(content)
-			console.log(content.attrs)
-		}
+	setup(props, content) {
 		return {
-			cli
-		}
-	}
+			...toRefs(fTableReaData),
+		};
+	},
 });
 </script>
 
@@ -52,7 +56,11 @@ export default defineComponent({
 	width: 100%;
 	padding: 10px;
 	box-sizing: border-box;
-	overflow: auto;
 	background-color: var(--f--table--bgColor);
+}
+.ftable_contact_table {
+	box-sizing: border-box;
+	overflow-x: auto;
+	width: 100%;
 }
 </style>

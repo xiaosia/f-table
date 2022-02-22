@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-10 14:52:48
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-16 17:03:53
+ * @LastEditTime: 2022-02-18 13:11:17
  */
 
 import {
@@ -16,7 +16,6 @@ import {
 	reactive,
 } from "vue";
 import Lists from "../column_list/index.js";
-import { reaDataStore } from "../store";
 
 export default defineComponent({
 	components: {
@@ -24,8 +23,6 @@ export default defineComponent({
 	},
 	setup(props, content) {
 		let _this = getCurrentInstance();
-		reaDataStore.options = _this.parent.attrs.options;
-		reaDataStore.columns = getCurrentInstance().parent.attrs.columns;
 		let solts = _this.parent.slots;
 
 		const getPointData = (name) => {
@@ -49,7 +46,6 @@ export default defineComponent({
 			width,
 			solts,
 			getPointData,
-			...toRefs(reaDataStore),
 			...toRefs(reaDataColumnsFrom),
 		};
 	},
@@ -59,8 +55,14 @@ export default defineComponent({
 		// datas : 传递进来的data数据
 		const datas = computed(() => {
 			// 需要一个page
+			console.log("datasComputed")
 			if (!this.$parent.$attrs.data) return [];
-			reaDataStore.data = this.$parent.$attrs.data;
+			if(this.$parent.page) {
+				return Array.from(this.$parent.$attrs.data).slice(
+					(this.$parent.$attrs.page.currentPage - 1) * this.$parent.$attrs.page.pageSize,
+					this.$parent.$attrs.page.currentPage * this.$parent.$attrs.page.pageSize
+				);
+			}
 			return Array.from(this.$parent.$attrs.data).slice(
 				(page.currentPage - 1) * page.pageSize,
 				page.currentPage * page.pageSize
@@ -93,7 +95,6 @@ export default defineComponent({
 			$parent.$emit("checkBoxChange", checkBoxList);
 
 		}
-		const computedFrom = () => {};
 		return h(
 			"table",
 			{
@@ -110,12 +111,12 @@ export default defineComponent({
 					computedColumns.value
 						? computedColumns.value.map((item, index) => {
 								return h("col", {
-									width: item.width,
+									width: item.width || '180px',
 								});
 						  })
 						: [],
 						computedOptions.value.selection? h("col", {
-							width: item.width,
+							width: item.width || '180px',
 						}): ""
 				]),
 				datas.value.map((item, index) => {
@@ -133,6 +134,7 @@ export default defineComponent({
 								btnSolts: solts.rowBtn,
 								soltsList: solts,
 								index: index + 1,
+								options: computedOptions.value,
 								selection: computedOptions.value.selection
 							}),
 						]

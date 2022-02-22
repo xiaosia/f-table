@@ -3,11 +3,12 @@
  * @Autor: Seven
  * @Date: 2022-02-11 11:09:42
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-14 13:51:55
+ * @LastEditTime: 2022-02-18 13:06:54
 -->
 
 <template>
 	<el-pagination
+		v-if="page"
 		v-model:currentPage="page.currentPage"
 		v-model:page-size="page.pageSize"
 		:page-sizes="[20, 50, 100, 500]"
@@ -22,30 +23,24 @@
 </template>
 
 <script>
-import { defineComponent, ref, getCurrentInstance, toRefs, computed } from "vue";
-import { reaDataStore } from "../store";
+import { defineComponent, ref, getCurrentInstance, computed } from "vue";
 export default defineComponent({
 	setup() {
 		const _this = getCurrentInstance();
-		const page = computed(()=>{
-				if(_this.parent.attrs.page){
-					reaDataStore.page = _this.parent.attrs.page
-				}else{
-					reaDataStore.page.pageTotal = reaDataStore.data.length
-				}
-			return reaDataStore.page
-
-		})
+		const page = computed(() => {
+			if (!_this.parent.attrs.page) return false;
+			return _this.parent.attrs.page;
+		});
 		const handleSizeChange = (val) => {
-			reaDataStore.page.pageSize = val
+			_this.parent.emit("size-change", val);
 		};
 		const handleCurrentChange = (val) => {
-			reaDataStore.page.currentPage = val
+			_this.parent.emit("current-change", val);
 		};
 		return {
 			handleSizeChange,
 			handleCurrentChange,
-			page
+			page,
 		};
 	},
 });

@@ -3,13 +3,13 @@
  * @Autor: Seven
  * @Date: 2022-02-10 15:24:19
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-16 17:02:03
+ * @LastEditTime: 2022-02-18 11:26:12
  */
 import { ElButton, ElCheckbox, ElPopconfirm } from "element-plus";
 import { defineComponent, h, toRefs, watch } from "vue";
 import Item from "../column_item/index.js";
 import FSolts from "../fsolts";
-import { reaDataStore } from "../store";
+import { fTableReaData } from "../store";
 
 export default defineComponent({
 	components: {
@@ -24,68 +24,66 @@ export default defineComponent({
 	},
 	setup(props, content) {
 		const updateModel = () => {
-			reaDataStore.form = JSON.parse(JSON.stringify(content.attrs.data));
-			reaDataStore.modelShow = true;
+			fTableReaData.form = JSON.parse(JSON.stringify(content.attrs.data));
+			fTableReaData.DialogModelOpen();
 		};
-		console.log("list_content", content);
 		const delectBtn = () => {
 			console.log("log");
 		};
 		return {
 			updateModel,
 			delectBtn,
-			...toRefs(reaDataStore),
+			...toRefs(fTableReaData),
 		};
 	},
 	render() {
 		const { columns, $attrs, options, updateModel, form, delectBtn, $emit } =
 			this;
-		console.log("list", this);
 		const showRow = () => {
-			if (options.rowBtn) {
-				return h(
-					"td",
-					{
-						rowspan: 1,
-						colspan: 1,
-						class: "list",
-					},
-					[
-						$attrs.btnSolts
-							? $attrs.btnSolts({
-									row: $attrs.data,
-									form: form,
-							  })
-							: "",
-						h(
-							ElButton,
-							{
-								type: "primary",
-								onClick: () => updateModel(),
+			if (!$attrs.options || !$attrs.options.rowBtn) return;
+
+			return h(
+				"td",
+				{
+					rowspan: 1,
+					colspan: 1,
+					class: "list",
+				},
+				[
+					$attrs.btnSolts
+						? $attrs.btnSolts({
+								row: $attrs.data,
+								form: form,
+						  })
+						: "",
+					h(
+						ElButton,
+						{
+							type: "primary",
+							onClick: () => updateModel(),
+						},
+						{ default: () => "修改" }
+					),
+					h(
+						ElPopconfirm,
+						{
+							title: "你确定要删除它吗",
+							onConfirm: () => delectBtn(),
+						},
+						{
+							reference: (props) => {
+								return h(
+									ElButton,
+									{
+										type: "danger",
+									},
+									{ default: () => "删除" }
+								);
 							},
-							{ default: () => "修改" }
-						),
-						h(
-							ElPopconfirm,
-							{
-								title: "你确定要删除它吗",
-								onConfirm: () => delectBtn(),
-							},
-							{
-								reference: (props) => {
-									return h(
-										ElButton,
-										{
-											type: "danger",
-										},
-										{ default: () => "删除" }
-									);
-								},
-							}
-						),
-					]
-				);
-			}
+						}
+					),
+				]
+			);
 		};
 		const row = () => {
 			if (!$attrs.columns) return [];
@@ -127,7 +125,7 @@ export default defineComponent({
 			});
 		};
 		const select = () => {
-			if(!$attrs.selection) return 
+			if (!$attrs.selection) return;
 			return h(
 				"td",
 				{

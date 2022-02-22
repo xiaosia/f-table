@@ -3,13 +3,13 @@
  * @Autor: Seven
  * @Date: 2022-02-09 11:00:23
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-16 17:08:08
+ * @LastEditTime: 2022-02-17 09:17:19
 -->
 <template>
 	<table cellspacing="0" cellpadding="0" class="ftable_label" ref="table" :style="{ width: width,tableLayout: 'fixed',borderCollapse: 'separate' }">
 		<colgroup>
 			<col v-if="options.selection">
-			<col v-for="(item, index) in columns" :width="item.width" />
+			<col v-for="(item, index) in columns" :width="item.width || '180px'" />
 		</colgroup>
 		<tr>
 			<td class="ftable_header_label" v-if="options.selection">
@@ -22,7 +22,7 @@
 				rowspan="1"
 				colspan="1"
 				:style="{
-					width: item.width,
+					width: item.width || '180px',
 				}"
 			>
 				{{ item.label }}

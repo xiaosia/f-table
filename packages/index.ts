@@ -1,23 +1,21 @@
 /*
- * @Description: 
+ * @Description: 导出form组件和table组件
  * @Autor: Seven
  * @Date: 2022-02-10 08:59:03
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-14 16:20:53
+ * @LastEditTime: 2022-02-22 10:39:19
  */
 import FTable from "./ftable/index.vue"
-
+import FFrom from "./ftable/fform/index.vue"
 const components = [
-    FTable
+    FTable,
+    FFrom
 ]
 
 
 const FtableUI = {
-　// install 方法 接收参数app
   install(app:any) {
-    console.log('执行一段逻辑', app)
     components.forEach(comp => {
-        console.log('comp', comp)
       app.component(comp.name, comp)
     })
   },
