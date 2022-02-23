@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-22 11:04:56
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-22 17:30:20
+ * @LastEditTime: 2022-02-23 15:58:11
  */
 export const columnst = [
 	{
@@ -15,10 +15,8 @@ export const columnst = [
 		label: "学号",
 		name: "id",
 		position: 'left',
-		render({h}:{
-			h: Function
-		}) {
-			return h('div', '我是columns的render')
+		render: ({item, h}) => {
+			return h("span", item.label);
 		},
 	},
 	{

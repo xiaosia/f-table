@@ -3,10 +3,10 @@
  * @Autor: Seven
  * @Date: 2022-02-10 15:24:19
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-22 15:33:10
+ * @LastEditTime: 2022-02-23 09:16:19
  */
 import { ElButton, ElCheckbox, ElPopconfirm } from "element-plus";
-import { defineComponent, h, toRefs, watch } from "vue";
+import { defineComponent, h, toRefs, watch} from "vue";
 import Item from "../column_item/index.js";
 import FSolts from "../fsolts";
 import { fTableReaData } from "../store";

@@ -3,14 +3,14 @@
  * @Autor: Seven
  * @Date: 2022-02-22 13:24:14
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-22 17:28:34
+ * @LastEditTime: 2022-02-23 15:57:57
  */
 
 import { VNode } from "vue";
 import Item from "../column_item/index.js";
 import { defaultConfig } from "../store"
 
-export const rowTest = (h:Function  , columns: any[], data = {}, soltsList = {}) => {
+export const rowTest = (h, columns, data = {}, soltsList = {}) => {
 	console.log("columns", columns, data, soltsList);
 	let positionLeftArrDom = []; //左右固定列
 	let positionRightDom = []; //右侧固定列
@@ -112,15 +112,15 @@ class postionArr {
  * @author: Seven
  */
 const rowDefault = (
-	h: Function ,
-	defaultClass: any,
-	data: any,
-	item: any,
-	styleArr: any,
+	h,
+	defaultClass,
+	data,
+	item: { width: any; render: (arg0: { item: any; data: any; h: VNode; }) => any; name: string | number; },
+	styleArr,
 	index,
 	soltsList,
 	columns
-): any => {
+) => {
 	return h(
 		"td",
 		{
@@ -138,7 +138,7 @@ const rowDefault = (
 		},
 		[
 			item.render
-				? item.render({item, data, h:Function})
+				? item.render({item, data, h})
 				: itemDom(
 						h,
 						Item,
