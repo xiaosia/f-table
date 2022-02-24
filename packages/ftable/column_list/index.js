@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-10 15:24:19
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-23 09:16:19
+ * @LastEditTime: 2022-02-24 14:01:57
  */
 import { ElButton, ElCheckbox, ElPopconfirm } from "element-plus";
 import { defineComponent, h, toRefs, watch} from "vue";
@@ -87,7 +87,8 @@ export default defineComponent({
 		};
 		const row = () => {
 			if (!$attrs.columns) return [];
-			return rowTest(h, $attrs.columns, $attrs.data, $attrs.soltsList);
+			console.log('$attrs$attrs$attrs', $attrs)
+			return rowTest(h, $attrs.columns, $attrs.data, $attrs.soltsList, $attrs.index);
 		};
 		const checkBoxChange = (e) => {
 			console.log("e", e);

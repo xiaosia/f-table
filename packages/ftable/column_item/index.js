@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-11 09:24:55
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-22 15:38:43
+ * @LastEditTime: 2022-02-24 13:58:44
  */
 
 import { defineComponent, h } from "vue";
@@ -15,6 +15,8 @@ export default defineComponent({
 			return $attrs.solt({ value: $attrs.value, row: $attrs.data });
 		}
 		if ($attrs.columns && $attrs.columns.type === "index") {
+			console.log("index", this)
+			console.log("$attr", $attrs)
 			return h("span", $attrs.index);
 		}
 		return h(

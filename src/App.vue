@@ -2,10 +2,18 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { ref } from "vue";
+import { ref, Ref, VNode} from "vue";
 import { columnst } from "./columns"
-const columns:any = ref(columnst);
+let columns:Array<ColumnsItem> = columnst;
+interface ColumnsItem {
+	name?: string;
+	type?: string;
+	width?: string | number;
+	position?: string;
+	render?: (arg0: { item: any; data: any; h: VNode }) => any;
+}
 
+// import { Columns } from ""
 const records = ref([{
   id: 1,
   name: "小王",
@@ -32,7 +40,9 @@ const records = ref([{
   sex: '男',
   sex2: '女'
 }])
-const options = ref({})
+const options = ref({
+  selection: true
+})
 </script>
 
 <template>

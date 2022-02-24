@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-10 14:52:48
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-18 13:11:17
+ * @LastEditTime: 2022-02-24 15:23:18
  */
 
 import {
@@ -116,7 +116,7 @@ export default defineComponent({
 						  })
 						: [],
 						computedOptions.value.selection? h("col", {
-							width: item.width || '180px',
+							width: '180px',
 						}): ""
 				]),
 				datas.value.map((item, index) => {

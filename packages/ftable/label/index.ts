@@ -3,13 +3,14 @@ import { defineComponent, getCurrentInstance, h, computed } from "vue";
 import Lists from "../column_list/index.js";
 import { defaultConfig } from "../store";
 import { rowTest } from "../column_list/computedRow";
+import { ElCheckbox } from "element-plus";
 
 /*
  * @Description:
  * @Autor: Seven
  * @Date: 2022-02-22 14:45:37
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-22 17:08:38
+ * @LastEditTime: 2022-02-24 15:33:04
  */
 export default defineComponent({
 	setup() {
@@ -33,7 +34,9 @@ export default defineComponent({
 	render() {
 		const { columns, width, options } = this;
 		const domCol = computed(() => {
-			return columns.map((v, i) => {
+			console.log('options', options)
+			let columnsCopy = [...columns]
+			columnsCopy = columnsCopy.map((v, i) => {
 				return {
 					...v,
 					render: ({item, data, h}) => {
@@ -41,6 +44,20 @@ export default defineComponent({
 					},
 				};
 			});
+			if(options && options.selection){
+				console.log("item", columnsCopy)
+				columnsCopy = [{
+					label: "序号",
+					type: 'checkbox',
+					render: ({item, data, h}) =>{
+						return h(ElCheckbox, {
+							label: "",
+						})
+					},
+				}, ...columnsCopy]
+				console.log("item", columnsCopy)
+			}
+			return columnsCopy
 		});
 		return h(
 			"table",

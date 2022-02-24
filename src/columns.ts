@@ -1,21 +1,31 @@
+import { VNode } from "vue";
+
 /*
  * @Description:
  * @Autor: Seven
  * @Date: 2022-02-22 11:04:56
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-23 15:58:11
+ * @LastEditTime: 2022-02-24 15:36:25
  */
-export const columnst = [
+interface ColumnsItem {
+	name?: string;
+	type?: string;
+	label?:string;
+	width?: string | number;
+	position?: string;
+	render?: (arg0: { item: any; data: any; h: any }) => any;
+}
+
+
+export const columnst:Array<ColumnsItem> = [
 	{
 		label: "序号",
 		type: "index",
-		position: 'left'
 	},
 	{
 		label: "学号",
 		name: "id",
-		position: 'left',
-		render: ({item, h}) => {
+		render: ({item, data, h}) :any => {
 			return h("span", item.label);
 		},
 	},
@@ -41,6 +51,5 @@ export const columnst = [
 	{
 		label: "性别固定列1",
 		name: "sex2",
-		position: 'right'
 	},
 ];

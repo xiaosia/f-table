@@ -3,14 +3,14 @@
  * @Autor: Seven
  * @Date: 2022-02-22 13:24:14
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-23 15:57:57
+ * @LastEditTime: 2022-02-24 15:38:16
  */
 
 import { VNode } from "vue";
 import Item from "../column_item/index.js";
 import { defaultConfig } from "../store"
 
-export const rowTest = (h, columns, data = {}, soltsList = {}) => {
+export const rowTest = (h, columns, data = {}, soltsList = {}, rowIndext) => {
 	console.log("columns", columns, data, soltsList);
 	let positionLeftArrDom = []; //左右固定列
 	let positionRightDom = []; //右侧固定列
@@ -36,7 +36,7 @@ export const rowTest = (h, columns, data = {}, soltsList = {}) => {
 					data,
 					element,
 					styleLeft,
-					index,
+					rowIndext,
 					soltsList,
 					columns
 				)
@@ -57,7 +57,7 @@ export const rowTest = (h, columns, data = {}, soltsList = {}) => {
 					data,
 					element,
 					styleLeft,
-					index,
+					rowIndext,
 					soltsList,
 					columns
 				)
@@ -72,14 +72,19 @@ export const rowTest = (h, columns, data = {}, soltsList = {}) => {
 				data,
 				element,
 				styleLeft,
-				index,
+				rowIndext,
 				soltsList,
 				columns
 			)
 		);
 	});
-	positionLeftArrDom[positionLeftArrDom.length -1].props.class = positionLeftArrDom[positionLeftArrDom.length -1].props.class + ' last_left_postition'
-	positionRightDom[positionRightDom.length -1].props.class = positionRightDom[positionRightDom.length -1].props.class + ' last_right_postition'
+	if(positionLeftArrDom&& positionLeftArrDom[positionLeftArrDom.length -1]){
+		positionLeftArrDom[positionLeftArrDom.length -1].props.class = positionLeftArrDom[positionLeftArrDom.length -1].props.class + ' last_left_postition'
+	}
+	if(positionRightDom&& positionRightDom[positionRightDom.length -1]){
+		positionRightDom[positionRightDom.length -1].props.class = positionRightDom[positionRightDom.length -1].props.class + ' last_right_postition'
+	}
+	// positionRightDom[positionRightDom.length -1].props.class = positionRightDom[positionRightDom.length -1].props.class + ' last_right_postition'
 	return [...positionLeftArrDom, ...defaultDom, ...positionRightDom];
 };
 class postionArr {
@@ -146,7 +151,7 @@ const rowDefault = (
 						data[item.name],
 						soltsList[item.name],
 						index,
-						columns
+						item
 				  ),
 		]
 	);
@@ -165,6 +170,7 @@ const rowDefault = (
  * @author: Seven
  */
 const itemDom = (h, DomCompoents, data, value, solt, index, columns) => {
+	console.log("ietmDom", h, DomCompoents, data, value, solt, index, columns)
 	return h(DomCompoents, {
 		data: data,
 		value: value,
