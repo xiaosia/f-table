@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-22 13:24:14
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-24 15:38:16
+ * @LastEditTime: 2022-02-25 14:27:39
  */
 
 import { VNode } from "vue";
@@ -11,7 +11,6 @@ import Item from "../column_item/index.js";
 import { defaultConfig } from "../store"
 
 export const rowTest = (h, columns, data = {}, soltsList = {}, rowIndext) => {
-	console.log("columns", columns, data, soltsList);
 	let positionLeftArrDom = []; //左右固定列
 	let positionRightDom = []; //右侧固定列
     let positionLeft = 0
@@ -170,7 +169,6 @@ const rowDefault = (
  * @author: Seven
  */
 const itemDom = (h, DomCompoents, data, value, solt, index, columns) => {
-	console.log("ietmDom", h, DomCompoents, data, value, solt, index, columns)
 	return h(DomCompoents, {
 		data: data,
 		value: value,

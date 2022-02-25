@@ -1,16 +1,14 @@
 import { defineComponent, getCurrentInstance, h, computed } from "vue";
 
 import Lists from "../column_list/index.js";
-import { defaultConfig } from "../store";
-import { rowTest } from "../column_list/computedRow";
-import { ElCheckbox } from "element-plus";
+import { defaultConfig, } from "../store";
 
 /*
  * @Description:
  * @Autor: Seven
  * @Date: 2022-02-22 14:45:37
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-24 15:33:04
+ * @LastEditTime: 2022-02-25 15:46:24
  */
 export default defineComponent({
 	setup() {
@@ -18,7 +16,7 @@ export default defineComponent({
 
 		let columns: any = _this.parent.attrs.columns;
 		let options = _this.parent.attrs.options;
-
+		let parentData = _this.parent.attrs.data;
 		// const width = computed(() => {
 		// 	return "100%"
 		// 	// return (columns.length + Number(options.rowBtn)) * 180 + "px";
@@ -29,12 +27,13 @@ export default defineComponent({
 			columns,
 			width,
 			options,
+			parentData,
 		};
 	},
 	render() {
-		const { columns, width, options } = this;
+		const { columns, width, options, parentData, $parent } = this;
+		console.log("this", this)
 		const domCol = computed(() => {
-			console.log('options', options)
 			let columnsCopy = [...columns]
 			columnsCopy = columnsCopy.map((v, i) => {
 				return {
@@ -44,21 +43,21 @@ export default defineComponent({
 					},
 				};
 			});
-			if(options && options.selection){
-				console.log("item", columnsCopy)
-				columnsCopy = [{
-					label: "序号",
-					type: 'checkbox',
-					render: ({item, data, h}) =>{
-						return h(ElCheckbox, {
-							label: "",
-						})
-					},
-				}, ...columnsCopy]
-				console.log("item", columnsCopy)
-			}
 			return columnsCopy
 		});
+		const checkBoxChange = ({ event }) =>{
+			if(event){
+				for (const iterator of parentData) {
+					$parent.selfPush('selectRow', iterator)
+				}
+				console.log("this", $parent)
+				$parent.$emit("checkBoxChange", $parent.getData('selectRow'));
+
+				return
+			}
+			$parent.selfClear('selectRow')
+			$parent.$emit("checkBoxChange", $parent.getData('selectRow'));
+		}
 		return h(
 			"table",
 			{
@@ -90,7 +89,9 @@ export default defineComponent({
 							data: {
 								sex: "名字",
 							},
+							onBoxSelect: (event) => checkBoxChange(event),
 							columns: domCol.value,
+							selection: options.selection,
 							btnSolts: {},
 							index: 1,
 							options: {},

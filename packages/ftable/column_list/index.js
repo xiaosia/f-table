@@ -3,10 +3,10 @@
  * @Autor: Seven
  * @Date: 2022-02-10 15:24:19
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-24 14:01:57
+ * @LastEditTime: 2022-02-25 14:38:57
  */
 import { ElButton, ElCheckbox, ElPopconfirm } from "element-plus";
-import { defineComponent, h, toRefs, watch} from "vue";
+import { computed, defineComponent, h, toRefs, watch} from "vue";
 import Item from "../column_item/index.js";
 import FSolts from "../fsolts";
 import { fTableReaData } from "../store";
@@ -39,6 +39,10 @@ export default defineComponent({
 	render() {
 		const { columns, $attrs, options, updateModel, form, delectBtn, $emit } =
 			this;
+		const rowSelectCompute = computed(()=>{
+			if(!$attrs.checkBoxList || !$attrs.data) return false
+			return $attrs.checkBoxList.indexOf($attrs.data) >=0 ?true:false
+		})
 		const showRow = () => {
 			if (!$attrs.options || !$attrs.options.rowBtn) return;
 
@@ -87,11 +91,10 @@ export default defineComponent({
 		};
 		const row = () => {
 			if (!$attrs.columns) return [];
-			console.log('$attrs$attrs$attrs', $attrs)
 			return rowTest(h, $attrs.columns, $attrs.data, $attrs.soltsList, $attrs.index);
 		};
 		const checkBoxChange = (e) => {
-			console.log("e", e);
+			console.log("e", e, $attrs.index);
 			$emit("boxSelect", {
 				event: e,
 				data: $attrs.data,
@@ -105,10 +108,14 @@ export default defineComponent({
 					rowspan: 1,
 					colspan: 1,
 					class: "list",
+					style: {
+						padding: "20px 10px"
+					}
 				},
 				[
 					h(ElCheckbox, {
 						label: "",
+						modelValue: rowSelectCompute.value,
 						onChange: (event) => checkBoxChange(event),
 					}),
 				]

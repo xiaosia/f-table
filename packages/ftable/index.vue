@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-09 10:52:42
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-22 16:12:58
+ * @LastEditTime: 2022-02-25 15:37:03
 -->
 <template>
 	<div class="ftable_contact f_table" ref="ftable_width">
@@ -25,7 +25,7 @@ import {
 	toRef,
 	toRefs,
 } from "vue";
-import { fTableReaData } from "./store";
+import { fTableReaData, FtableData } from "./store";
 import Label from "./label/index";
 import Columns from "./column/index.js";
 import SubmitList from "./submitList/index.js";
@@ -43,8 +43,9 @@ export default defineComponent({
 		Datat,
 	},
 	setup(props, content) {
+		let FtableDataa = FtableData()
 		return {
-			...toRefs(fTableReaData),
+			...FtableDataa,
 		};
 	},
 });

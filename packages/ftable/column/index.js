@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-10 14:52:48
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-24 15:23:18
+ * @LastEditTime: 2022-02-25 15:44:27
  */
 
 import {
@@ -16,6 +16,9 @@ import {
 	reactive,
 } from "vue";
 import Lists from "../column_list/index.js";
+
+import { fTableReaData } from "../store";
+
 
 export default defineComponent({
 	components: {
@@ -39,7 +42,6 @@ export default defineComponent({
 				pageSize: 20, //每页个数
 				currentPage: 1, //当前页数
 			},
-			checkBoxList: [] //用于已经选择的列表
 		});
 		
 		return {
@@ -50,12 +52,11 @@ export default defineComponent({
 		};
 	},
 	render() {
-		const { width, data, solts, columns, page, $parent, checkBoxList} = this;
-
+		const { width, data, solts, columns, page, $parent} = this;
+		console.log('parentparentparentparentparent', $parent )
 		// datas : 传递进来的data数据
 		const datas = computed(() => {
 			// 需要一个page
-			console.log("datasComputed")
 			if (!this.$parent.$attrs.data) return [];
 			if(this.$parent.page) {
 				return Array.from(this.$parent.$attrs.data).slice(
@@ -84,17 +85,19 @@ export default defineComponent({
 		const rowDelect = (row, data, index) => {
 			$parent.$emit("rowDelect", { row, data, index });
 		};
-
+		const checkBoxList = computed(() =>{
+			return $parent.getData('selectRow')
+		})
 		const checkBoxChange = (event) =>{
 			console.log("event", event)
 			if(event.event){
-				checkBoxList.push(event.data)
+				$parent.selfPush('selectRow', event.data)
 			}else{
-				checkBoxList.splice(checkBoxList.indexOf(event.data), 1)
+				$parent.selfSplice('selectRow', $parent.selfIndexOf('selectRow', event.data), 1)
 			}
-			$parent.$emit("checkBoxChange", checkBoxList);
-
+			$parent.$emit("checkBoxChange", $parent.getData('selectRow'));
 		}
+
 		return h(
 			"table",
 			{
@@ -135,7 +138,8 @@ export default defineComponent({
 								soltsList: solts,
 								index: index + 1,
 								options: computedOptions.value,
-								selection: computedOptions.value.selection
+								selection: computedOptions.value.selection,
+								checkBoxList: checkBoxList.value
 							}),
 						]
 					);

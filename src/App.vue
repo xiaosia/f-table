@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Autor: Seven
+ * @Date: 2022-02-14 16:02:37
+ * @LastEditors: Seven
+ * @LastEditTime: 2022-02-25 13:59:56
+-->
 
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
@@ -43,10 +50,20 @@ const records = ref([{
 const options = ref({
   selection: true
 })
+
+const oncheckBoxChange = (e: any) =>{
+  console.log("e", e)
+}
 </script>
 
 <template>
-	<f-table :columns="columns" :data="records" :options="options"> 
+	<f-table :columns="columns" :data="records" :options="options" @checkBoxChange="oncheckBoxChange"> 
+    <template v-slot:name="{value, row}">
+       <el-tag>插槽绑定的值：{{value}}</el-tag>
+       <el-tag>这一行的值：{{row}}</el-tag>
+    </template>
+  </f-table>
+	<f-table :columns="columns" :data="records" :options="options" @checkBoxChange="oncheckBoxChange"> 
     <template v-slot:name="{value, row}">
        <el-tag>插槽绑定的值：{{value}}</el-tag>
        <el-tag>这一行的值：{{row}}</el-tag>
