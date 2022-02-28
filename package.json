@@ -1,11 +1,29 @@
 {
-  "name": "f-table",
+  "name": "f-table-plus",
+  "author": "xiaosi",
   "homepage":"https://github.com/xiaosia/f-table",
-  "private": true,
-  "version": "0.0.0",
+  "description": "基于element plus封装的表格",
+  "private": false,
+  "version": "0.0.2",
+  "main": "./dist/f-table-plus.umd.ts",
+  "module": "./dist/f-table-plus.es.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/f-table-plus.es.ts",
+      "require": "./dist/f-table-plus.umd.ts"
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    }
+  },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite ",
     "build": "vue-tsc --noEmit && vite build",
+    "product": "vue-tsc --noEmit && vite build ./build/production.env.ts",
     "preview": "vite preview"
   },
   "dependencies": {
