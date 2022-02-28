@@ -29,4 +29,20 @@ export default defineConfig({
 			resolvers: [ElementPlusResolver()],
 		}),
 	],
+	build:{
+		lib: {
+			entry: resolve(__dirname, './packages/index.ts'),
+			name: 'f-table-plus',
+			fileName: (format) => `f-table-plus.${format}.ts`
+		},
+		rollupOptions: {
+			external: ['vue'],
+			output: {
+				// 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+				globals: {
+					vue: 'Vue',
+				}
+			}
+		}
+	},
 });
