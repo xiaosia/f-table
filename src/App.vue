@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-14 16:02:37
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-25 13:59:56
+ * @LastEditTime: 2022-03-01 17:02:02
 -->
 
 <script setup lang="ts">
@@ -48,7 +48,8 @@ const records = ref([{
   sex2: '女'
 }])
 const options = ref({
-  selection: true
+  selection: true,
+  rowBtn:true,
 })
 
 const oncheckBoxChange = (e: any) =>{

@@ -1,14 +1,14 @@
 import { defineComponent, getCurrentInstance, h, computed } from "vue";
 
 import Lists from "../column_list/index.js";
-import { defaultConfig, } from "../store";
+import { defaultConfig } from "../store";
 
 /*
  * @Description:
  * @Autor: Seven
  * @Date: 2022-02-22 14:45:37
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-25 15:46:24
+ * @LastEditTime: 2022-03-01 17:05:54
  */
 export default defineComponent({
 	setup() {
@@ -32,38 +32,45 @@ export default defineComponent({
 	},
 	render() {
 		const { columns, width, options, parentData, $parent } = this;
-		console.log("this", this)
+		console.log("thisoptions", options);
 		const domCol = computed(() => {
-			let columnsCopy = [...columns]
+			let columnsCopy = [...columns];
 			columnsCopy = columnsCopy.map((v, i) => {
 				return {
 					...v,
-					render: ({item, data, h}) => {
+					render: ({ item, data, h }) => {
 						return h("span", item.label);
 					},
 				};
 			});
-			return columnsCopy
-		});
-		const checkBoxChange = ({ event }) =>{
-			if(event){
-				for (const iterator of parentData) {
-					$parent.selfPush('selectRow', iterator)
-				}
-				console.log("this", $parent)
-				$parent.$emit("checkBoxChange", $parent.getData('selectRow'));
-
-				return
+			if (options && options.rowBtn) {
+				columnsCopy.push({
+					render: ({ item, data, h }) => {
+						return h("span", "操作");
+					},
+				});
 			}
-			$parent.selfClear('selectRow')
-			$parent.$emit("checkBoxChange", $parent.getData('selectRow'));
-		}
+			return columnsCopy;
+		});
+		const checkBoxChange = ({ event }) => {
+			if (event) {
+				for (const iterator of parentData) {
+					$parent.selfPush("selectRow", iterator);
+				}
+				console.log("this", $parent);
+				$parent.$emit("checkBoxChange", $parent.getData("selectRow"));
+
+				return;
+			}
+			$parent.selfClear("selectRow");
+			$parent.$emit("checkBoxChange", $parent.getData("selectRow"));
+		};
 		return h(
 			"table",
 			{
 				cellpadding: "0",
 				cellspacing: "0",
-				class: 'ftable_label',
+				class: "ftable_label",
 				style: {
 					width: width,
 					"table-layout": "fixed",
@@ -80,12 +87,13 @@ export default defineComponent({
 						  })
 						: [],
 				]),
-				h("tr", {
-					class: 'ftable_column'
-				},[
-					h(
-						Lists,
-						{
+				h(
+					"tr",
+					{
+						class: "ftable_column",
+					},
+					[
+						h(Lists, {
 							data: {
 								sex: "名字",
 							},
@@ -95,10 +103,9 @@ export default defineComponent({
 							btnSolts: {},
 							index: 1,
 							options: {},
-						},
-						[h("div", 123)]
-					),
-				]),
+						}),
+					]
+				),
 			]
 		);
 	},
