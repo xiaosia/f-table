@@ -3,15 +3,15 @@
  * @Autor: Seven
  * @Date: 2022-02-14 16:02:37
  * @LastEditors: Seven
- * @LastEditTime: 2022-03-01 17:02:02
+ * @LastEditTime: 2022-03-01 22:10:05
 -->
 
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { ref, Ref, VNode} from "vue";
-import { columnst } from "./columns"
-let columns:Array<ColumnsItem> = columnst;
+import { ref, Ref, VNode } from "vue";
+import { columnst } from "./columns";
+let columns: Array<ColumnsItem> = columnst;
 interface ColumnsItem {
 	name?: string;
 	type?: string;
@@ -21,55 +21,65 @@ interface ColumnsItem {
 }
 
 // import { Columns } from ""
-const records = ref([{
-  id: 1,
-  name: "小王",
-  sex: '男',
-  sex2: '女'
-}, {
-  id: 2,
-  name: "小徐",
-  sex: '男',
-  sex2: '女'
-}, {
-  id: 3,
-  name: "小虎",
-  sex: '男',
-  sex2: '女'
-}, {
-  id: 4,
-  name: "小昭",
-  sex: '男',
-  sex2: '女'
-},{
-  id: 5,
-  name: "小拍",
-  sex: '男',
-  sex2: '女'
-}])
+const records = ref([
+	{
+		id: 1,
+		name: "小王",
+		sex: "男",
+		sex2: "女",
+	},
+	{
+		id: 2,
+		name: "小徐",
+		sex: "男",
+		sex2: "女",
+	},
+	{
+		id: 3,
+		name: "小虎",
+		sex: "男",
+		sex2: "女",
+	},
+	{
+		id: 4,
+		name: "小昭",
+		sex: "男",
+		sex2: "女",
+	},
+	{
+		id: 5,
+		name: "小拍",
+		sex: "男",
+		sex2: "女",
+	},
+]);
 const options = ref({
-  selection: true,
-  rowBtn:true,
-})
+	selection: true,
+	rowBtn: true,
+	updateHide: true,
+	// deleteHide: true,
+});
 
-const oncheckBoxChange = (e: any) =>{
-  console.log("e", e)
+const oncheckBoxChange = (e: any) => {
+	console.log("e", e);
+};
+const onDelectFunc = (event: any) =>{
+  console.log("Table: ", event)
 }
 </script>
 
 <template>
-	<f-table :columns="columns" :data="records" :options="options" @checkBoxChange="oncheckBoxChange"> 
-    <template v-slot:name="{value, row}">
-       <el-tag>插槽绑定的值：{{value}}</el-tag>
-       <el-tag>这一行的值：{{row}}</el-tag>
-    </template>
-  </f-table>
-	<f-table :columns="columns" :data="records" :options="options" @checkBoxChange="oncheckBoxChange"> 
-    <template v-slot:name="{value, row}">
-       <el-tag>插槽绑定的值：{{value}}</el-tag>
-       <el-tag>这一行的值：{{row}}</el-tag>
-    </template>
-  </f-table>
+	<f-table
+		:columns="columns"
+		:data="records"
+		:options="options"
+		@checkBoxChange="oncheckBoxChange"
+    @onDelect="onDelectFunc"
+	>
+		<template	v-slot:rowBtn="{row}">
+			<div>自己的插槽按钮{{row}}</div>
+		</template>
+	</f-table>
 </template>
 
 <style>
@@ -77,9 +87,9 @@ const oncheckBoxChange = (e: any) =>{
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-  background-color: rgb(156, 154, 154);
+	background-color: rgb(156, 154, 154);
 }
-html{
-  background-color: #eee;
+html {
+	background-color: #eee;
 }
 </style>

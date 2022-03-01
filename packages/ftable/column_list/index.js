@@ -3,10 +3,10 @@
  * @Autor: Seven
  * @Date: 2022-02-10 15:24:19
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-25 14:38:57
+ * @LastEditTime: 2022-03-01 22:07:05
  */
 import { ElButton, ElCheckbox, ElPopconfirm } from "element-plus";
-import { computed, defineComponent, h, toRefs, watch} from "vue";
+import { computed, defineComponent, h, toRefs, watch } from "vue";
 import Item from "../column_item/index.js";
 import FSolts from "../fsolts";
 import { fTableReaData } from "../store";
@@ -27,8 +27,11 @@ export default defineComponent({
 			fTableReaData.form = JSON.parse(JSON.stringify(content.attrs.data));
 			fTableReaData.DialogModelOpen();
 		};
-		const delectBtn = () => {
-			console.log("log");
+		const delectBtn = (item, data) => {
+			content.emit('delect', {
+				item,
+				data
+			})
 		};
 		return {
 			updateModel,
@@ -39,27 +42,22 @@ export default defineComponent({
 	render() {
 		const { columns, $attrs, options, updateModel, form, delectBtn, $emit } =
 			this;
-		const rowSelectCompute = computed(()=>{
-			if(!$attrs.checkBoxList || !$attrs.data) return false
-			return $attrs.checkBoxList.indexOf($attrs.data) >=0 ?true:false
-		})
-		const showRow = () => {
+		const rowSelectCompute = computed(() => {
+			if (!$attrs.checkBoxList || !$attrs.data) return false;
+			return $attrs.checkBoxList.indexOf($attrs.data) >= 0 ? true : false;
+		});
+		const showRow = (item, data) => {
 			if (!$attrs.options || !$attrs.options.rowBtn) return;
-
-			return h(
-				"td",
-				{
-					rowspan: 1,
-					colspan: 1,
-					class: "list",
-				},
-				[
-					$attrs.btnSolts
-						? $attrs.btnSolts({
-								row: $attrs.data,
-								form: form,
-						  })
-						: "",
+			let renderList = [];
+			if ($attrs.btnSolts) {
+				renderList.push(
+					$attrs.btnSolts({
+						row: $attrs.data,
+					})
+				);
+			}
+			if (!$attrs.options.updateHide) {
+				renderList.push(
 					h(
 						ElButton,
 						{
@@ -67,12 +65,16 @@ export default defineComponent({
 							onClick: () => updateModel(),
 						},
 						{ default: () => "修改" }
-					),
+					)
+				);
+			}
+			if (!$attrs.options.deleteHide) {
+				renderList.push(
 					h(
 						ElPopconfirm,
 						{
 							title: "你确定要删除它吗",
-							onConfirm: () => delectBtn(),
+							onConfirm: () => delectBtn(item, data),
 						},
 						{
 							reference: (props) => {
@@ -85,13 +87,34 @@ export default defineComponent({
 								);
 							},
 						}
-					),
-				]
-			);
+					)
+				);
+			}
+
+			return h("div", {}, renderList);
 		};
+		const columnsRow = computed(() => {
+			let columnsRow = $attrs.columns;
+			if (!$attrs.options || !$attrs.options.rowBtn) return columnsRow;
+			return [
+				...columnsRow,
+				{
+					position: "right",
+					render: ({ item, data, h }) => {
+						return showRow(item, data);
+					},
+				},
+			];
+		});
 		const row = () => {
 			if (!$attrs.columns) return [];
-			return rowTest(h, $attrs.columns, $attrs.data, $attrs.soltsList, $attrs.index);
+			return rowTest(
+				h,
+				columnsRow.value,
+				$attrs.data,
+				$attrs.soltsList,
+				$attrs.index
+			);
 		};
 		const checkBoxChange = (e) => {
 			console.log("e", e, $attrs.index);
@@ -109,8 +132,8 @@ export default defineComponent({
 					colspan: 1,
 					class: "list",
 					style: {
-						padding: "20px 10px"
-					}
+						padding: "20px 10px",
+					},
 				},
 				[
 					h(ElCheckbox, {
@@ -121,6 +144,6 @@ export default defineComponent({
 				]
 			);
 		};
-		return [select(), row(), showRow()];
+		return [select(), row()];
 	},
 });

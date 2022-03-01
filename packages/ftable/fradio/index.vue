@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-10 08:44:59
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-10 10:12:17
+ * @LastEditTime: 2022-03-01 22:14:32
 -->
 <template>
 	<el-radio-group size="small">
@@ -17,7 +17,6 @@ import { ref, defineComponent } from "vue";
 export default defineComponent({
 	name: "f-radio",
 	setup(props, { attrs }) {
-		console.log("attr", attrs)
 		const radio4 = ref("1");
 		return {
 			radio4,

@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-10 14:52:48
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-25 15:44:27
+ * @LastEditTime: 2022-03-01 22:09:01
  */
 
 import {
@@ -34,7 +34,6 @@ export default defineComponent({
 		const width = computed(() => {
 			return "100%";
 		});
-
 		const reaDataColumnsFrom = reactive({
 			upodateFrom: "", //用于更新的数据
 			page: {
@@ -53,7 +52,12 @@ export default defineComponent({
 	},
 	render() {
 		const { width, data, solts, columns, page, $parent} = this;
-		console.log('parentparentparentparentparent', $parent )
+		console.log('parentparentparentparentparent',  $parent )
+		
+		const onDelectFunc = (event) =>{
+			$parent.$emit('onDelect', event)
+		}
+
 		// datas : 传递进来的data数据
 		const datas = computed(() => {
 			// 需要一个page
@@ -139,7 +143,8 @@ export default defineComponent({
 								index: index + 1,
 								options: computedOptions.value,
 								selection: computedOptions.value.selection,
-								checkBoxList: checkBoxList.value
+								checkBoxList: checkBoxList.value,
+								onDelect: (event) => onDelectFunc(event)
 							}),
 						]
 					);

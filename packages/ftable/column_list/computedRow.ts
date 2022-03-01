@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-22 13:24:14
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-25 14:27:39
+ * @LastEditTime: 2022-03-01 21:31:37
  */
 
 import { VNode } from "vue";
@@ -18,9 +18,9 @@ export const rowTest = (h, columns, data = {}, soltsList = {}, rowIndext) => {
 	let defaultDom = [];
 	let defaultClass = ["list"]; //默认的每行类
 
+	console.log("columns", columns)
 	columns.forEach((element, index) => {
 		if (!element) return;
-
 		if (element.position && element.position === "left") {
 			let styleLeft = {
 				[element.position]: `${positionLeft}px`,

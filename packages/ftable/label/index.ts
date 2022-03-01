@@ -8,7 +8,7 @@ import { defaultConfig } from "../store";
  * @Autor: Seven
  * @Date: 2022-02-22 14:45:37
  * @LastEditors: Seven
- * @LastEditTime: 2022-03-01 17:05:54
+ * @LastEditTime: 2022-03-01 22:14:23
  */
 export default defineComponent({
 	setup() {
@@ -32,7 +32,6 @@ export default defineComponent({
 	},
 	render() {
 		const { columns, width, options, parentData, $parent } = this;
-		console.log("thisoptions", options);
 		const domCol = computed(() => {
 			let columnsCopy = [...columns];
 			columnsCopy = columnsCopy.map((v, i) => {
@@ -45,6 +44,7 @@ export default defineComponent({
 			});
 			if (options && options.rowBtn) {
 				columnsCopy.push({
+					position: 'right',
 					render: ({ item, data, h }) => {
 						return h("span", "操作");
 					},
@@ -57,7 +57,6 @@ export default defineComponent({
 				for (const iterator of parentData) {
 					$parent.selfPush("selectRow", iterator);
 				}
-				console.log("this", $parent);
 				$parent.$emit("checkBoxChange", $parent.getData("selectRow"));
 
 				return;

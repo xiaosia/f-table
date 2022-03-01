@@ -39,6 +39,8 @@ $columns: 180px;
 	td {
 		width: var(--f-table-columns--item);
         background-color: var(--f--table--column--list--item--bgColor);
+        box-sizing: border-box;
+        overflow: hidden;
 	}
 }
 .ftable_column:hover{
