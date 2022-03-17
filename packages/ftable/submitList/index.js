@@ -3,29 +3,26 @@
  * @Autor: Seven
  * @Date: 2022-02-11 10:02:30
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-14 13:56:54
+ * @LastEditTime: 2022-03-17 11:16:27
  */
 
 import { ElButton } from "element-plus";
 import { defineComponent, h } from "vue";
-import { reaDataStore } from "../store";
+import { fTableReaData } from "../store";
 export default defineComponent({
 	name: "submitList",
 	setup(props, { emit }) {
 		const addModel = () => {
-			reaDataStore.form = {};
-			reaDataStore.modelShow = true;
-			emit("modelShow");
+			fTableReaData.DialogModelOpen()
 		};
 		return {
 			addModel,
 		};
 	},
 	render() {
-		const { addModel } = this;
-
+		const { addModel, $parent } = this;
 		const listBntn = () => {
-			if (reaDataStore.options&&reaDataStore.options.createBtn) {
+			if ($parent.$attrs.options&&$parent.$attrs.options.createBtn) {
 				return h(
 					ElButton,
 					{

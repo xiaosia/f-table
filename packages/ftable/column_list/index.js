@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-10 15:24:19
  * @LastEditors: Seven
- * @LastEditTime: 2022-03-01 22:07:05
+ * @LastEditTime: 2022-03-17 11:05:07
  */
 import { ElButton, ElCheckbox, ElPopconfirm } from "element-plus";
 import { computed, defineComponent, h, toRefs, watch } from "vue";
@@ -25,7 +25,7 @@ export default defineComponent({
 	setup(props, content) {
 		const updateModel = () => {
 			fTableReaData.form = JSON.parse(JSON.stringify(content.attrs.data));
-			fTableReaData.DialogModelOpen();
+			fTableReaData.DialogModelOpen('update');
 		};
 		const delectBtn = (item, data) => {
 			content.emit('delect', {

@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-09 16:21:41
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-25 15:39:16
+ * @LastEditTime: 2022-03-17 11:10:27
  */
 import { reactive } from "vue"
 
@@ -75,8 +75,10 @@ export const FtableData = () =>{
         }
     }
 }
+// 这是状态
 export const fTableReaData = reactive({
     DialogModel: false,
+    Model:'create',
     form: {},
     selectRow: [],
     changeDialogModel: (event) => {
@@ -85,7 +87,9 @@ export const fTableReaData = reactive({
     DialogModelClose: () => {
         fTableReaData.DialogModel = false
     },
-    DialogModelOpen: () => {
+    DialogModelOpen: (model = "create") => {
+        console.log('model', model)
+        fTableReaData.Model = model
         fTableReaData.DialogModel = true
     },
     getFromData: () => {

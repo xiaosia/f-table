@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-09 16:14:29
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-18 13:12:42
+ * @LastEditTime: 2022-03-17 11:07:53
 -->
 <template>
 	<el-dialog v-model="DialogModel" title="新增/编辑" width="80%">
@@ -41,9 +41,11 @@ export default defineComponent({
 		let columns = _this.parent.attrs.columns;
 		const close = (name) => {
 			fTableReaData.changeDialogModel(false)
+			
 			_this.parent.emit("confirm", {
 				form: fTableReaData.getFromData(),
-				name: name
+				name: name,
+				model: fTableReaData.Model
 			})
 		}
 		return {

@@ -3,7 +3,7 @@
  * @Autor: Seven
  * @Date: 2022-02-14 16:02:37
  * @LastEditors: Seven
- * @LastEditTime: 2022-02-14 16:13:25
+ * @LastEditTime: 2022-03-17 11:20:41
  */
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
@@ -42,6 +42,12 @@ export default defineConfig({
 				globals: {
 					vue: 'Vue',
 				}
+			}
+		},
+		terserOptions: {
+			compress: {
+				drop_console: true,
+				drop_debugger: true,
 			}
 		}
 	},
